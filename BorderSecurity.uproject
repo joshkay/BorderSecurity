@@ -1,0 +1,17 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{82BFBF9A-41F9-7774-1E69-DC9C02C337F4}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "BorderSecurity",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"AIModule"
+			]
+		}
+	]
+}
