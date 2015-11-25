@@ -1,6 +1,7 @@
 // Josh Kay 2015
 
 #include "BorderSecurity.h"
+#include "Environment/BorderItem.h"
 #include "Projectile.h"
 
 AProjectile::AProjectile()
@@ -30,7 +31,7 @@ void AProjectile::OnOverlap(class AActor* OtherActor, class UPrimitiveComponent*
 {
 	if (!IgnoredActors.Contains(OtherActor))
 	{
-		UE_LOG(LogTemp, Display, TEXT("PROJECTILE HIT %s"), *OtherActor->GetName());
+		HitActor(OtherActor);
 		Destroy();
 	}
 }
@@ -43,4 +44,13 @@ void AProjectile::AddIgnoredActor(AActor* IgnoredActor)
 void AProjectile::TimeIsUp()
 {
 	Destroy();
+}
+
+void AProjectile::HitActor(AActor* Actor)
+{
+	ABorderItem* BorderItem = Cast<ABorderItem>(Actor);
+	if (BorderItem && BorderItem->IsAlive())
+	{
+		BorderItem->DealDamage(Damage);
+	}
 }

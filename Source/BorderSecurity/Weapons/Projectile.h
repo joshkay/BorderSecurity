@@ -25,6 +25,8 @@ protected:
 	UFUNCTION()
 	void TimeIsUp();
 
+	void HitActor(AActor* Actor);
+
 	// Box collider on projectile
 	UPROPERTY(EditAnywhere, Category = Collision)
 	UBoxComponent* ColliderComponent;
@@ -39,6 +41,10 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Movement)
 	float TimeToDestroy;
+
+	// Damage
+	UPROPERTY(EditAnywhere, Category = Damage)
+	float Damage;
 
 	TArray<AActor*> IgnoredActors;
 

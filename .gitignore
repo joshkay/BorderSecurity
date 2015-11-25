@@ -1,0 +1,9 @@
+Saved
+Intermediate
+DerivedDataCache
+/Build
+Binaries
+/*.sdf
+/*.sln
+/*.opensdf
+/.vs/BorderSecurity/v14/*.suo

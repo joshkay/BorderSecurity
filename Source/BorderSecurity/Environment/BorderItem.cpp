@@ -11,3 +11,19 @@ ABorderItem::ABorderItem()
 	BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
 	BoxCollider->AttachTo(RootComponent);
 }
+
+void ABorderItem::BeginPlay()
+{
+	Super::BeginPlay();
+
+	Health = StartingHealth;
+}
+
+void ABorderItem::DealDamage(float Amount)
+{
+	Health -= Amount;
+	if (Health <= 0.f)
+	{
+		Destroy();
+	}
+}

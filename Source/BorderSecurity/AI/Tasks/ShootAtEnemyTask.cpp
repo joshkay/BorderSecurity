@@ -18,21 +18,35 @@ EBTNodeResult::Type UShootAtEnemyTask::ExecuteTask(UBehaviorTreeComponent& Owner
 
 	AMinionCharacter* Minion = Cast<AMinionCharacter>(MinionController->GetPawn());
 	ABorderItem* Enemy = MinionController->GetEnemy();
-	if (Enemy && Minion)
+	if (CanAttack(Minion, Enemy))
 	{
-		FVector Origin;
-		FVector BoxEtent;
-		Enemy->GetActorBounds(false, Origin, BoxEtent);
+		AttackEnemy(Minion, Enemy);
 
-		FVector WallTarget = Enemy->GetActorLocation() + FVector(-BoxEtent.X / 2, 0.f, BoxEtent.Z);
-		FRotator Rotator = (WallTarget - Minion->GetActorLocation()).Rotation();
-		//Rotator.Pitch += 150.f;
-
-		Minion->SetFireRotation(Rotator);
-		Minion->StartFire();
-
+		return EBTNodeResult::InProgress;
+	}
+	else if (!Enemy)
+	{
 		return EBTNodeResult::Succeeded;
 	}
 
 	return EBTNodeResult::Failed;
+}
+
+void UShootAtEnemyTask::AttackEnemy(AMinionCharacter* Minion, ABorderItem* Enemy)
+{
+	FVector Origin;
+	FVector BoxEtent;
+	Enemy->GetActorBounds(false, Origin, BoxEtent);
+
+	FVector WallTarget = Enemy->GetActorLocation() + FVector(-BoxEtent.X / 2, 0.f, BoxEtent.Z);
+	FRotator Rotator = (WallTarget - Minion->GetActorLocation()).Rotation();
+	//Rotator.Pitch += 150.f;
+
+	Minion->SetFireRotation(Rotator);
+	Minion->StartFire();
+}
+
+bool UShootAtEnemyTask::CanAttack(AMinionCharacter* Minion, ABorderItem* Enemy)
+{
+	return Enemy && Minion && !Minion->IsFiring() && Enemy->IsAlive();
 }

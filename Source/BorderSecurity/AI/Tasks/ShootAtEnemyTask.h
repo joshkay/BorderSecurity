@@ -15,4 +15,8 @@ class BORDERSECURITY_API UShootAtEnemyTask : public UBTTask_BlackboardBase
 	
 public:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+protected:
+	bool CanAttack(AMinionCharacter* Minion, ABorderItem* Enemy);
+	void AttackEnemy(AMinionCharacter* Minion, ABorderItem* Enemy);
 };

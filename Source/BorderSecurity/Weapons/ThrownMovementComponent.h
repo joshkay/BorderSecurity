@@ -21,7 +21,13 @@ protected:
 	void UpdateRotation();
 
 	UPROPERTY(EditAnywhere, Category = Rotation)
-	float RotationSpeed;
+	float PitchRotationSpeed;
+
+	UPROPERTY(EditAnywhere, Category = Rotation)
+	float YawRotationSpeed;
+
+	UPROPERTY(EditAnywhere, Category = Rotation)
+	float RollRotationSpeed;
 
 	FRotator CurrentRotation;
 };

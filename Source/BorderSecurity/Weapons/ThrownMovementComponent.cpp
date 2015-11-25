@@ -22,7 +22,9 @@ void UThrownMovementComponent::TickComponent(float DeltaTime, enum ELevelTick Ti
 void UThrownMovementComponent::UpdateRotation()
 {
 	// Rotate around the yaw
-	CurrentRotation.Pitch -= RotationSpeed;
+	CurrentRotation.Pitch += PitchRotationSpeed;
+	CurrentRotation.Yaw += YawRotationSpeed;
+	CurrentRotation.Roll += RollRotationSpeed;
 
 	GetOwner()->SetActorRotation(CurrentRotation);
 }
