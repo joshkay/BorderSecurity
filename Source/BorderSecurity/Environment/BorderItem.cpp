@@ -3,27 +3,33 @@
 #include "BorderSecurity.h"
 #include "BorderItem.h"
 
-ABorderItem::ABorderItem()
+ABorderItem::ABorderItem(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	RootComponent = Mesh;
+	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComponent"));
+	RootComponent = MeshComponent;
 	
-	BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
-	BoxCollider->AttachTo(RootComponent);
+	ColliderComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ColliderComponent"));
+	ColliderComponent->AttachTo(RootComponent);
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 }
 
 void ABorderItem::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Health = StartingHealth;
 }
 
-void ABorderItem::DealDamage(float Amount)
+float ABorderItem::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
 {
-	Health -= Amount;
-	if (Health <= 0.f)
+	float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	// Apply damage and destroy if not alive
+	HealthComponent->TakeDamage(ActualDamage);
+	if (!HealthComponent->IsAlive())
 	{
 		Destroy();
 	}
+
+	return ActualDamage;
 }

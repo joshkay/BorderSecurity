@@ -21,11 +21,13 @@ public:
 
 	void AddIgnoredActor(AActor* IgnoredActor);
 
+	float GetDamage();
+
 protected:
 	UFUNCTION()
 	void TimeIsUp();
 
-	void HitActor(AActor* Actor);
+	void ApplyDamage(AActor* Actor);
 
 	// Box collider on projectile
 	UPROPERTY(EditAnywhere, Category = Collision)
@@ -46,7 +48,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Damage)
 	float Damage;
 
-	TArray<AActor*> IgnoredActors;
+	UPROPERTY(EditAnywhere, Category = Damage)
+	bool bDestroyOnCollision;
 
+	TArray<AActor*> IgnoredActors;
 	FTimerHandle DestroyTimer;
 };

@@ -31,8 +31,12 @@ void AProjectile::OnOverlap(class AActor* OtherActor, class UPrimitiveComponent*
 {
 	if (!IgnoredActors.Contains(OtherActor))
 	{
-		HitActor(OtherActor);
-		Destroy();
+		ApplyDamage(OtherActor);
+		
+		if (bDestroyOnCollision)
+		{
+			Destroy();
+		}
 	}
 }
 
@@ -41,16 +45,20 @@ void AProjectile::AddIgnoredActor(AActor* IgnoredActor)
 	IgnoredActors.Add(IgnoredActor);
 }
 
+float AProjectile::GetDamage()
+{
+	return Damage;
+}
+
 void AProjectile::TimeIsUp()
 {
 	Destroy();
 }
 
-void AProjectile::HitActor(AActor* Actor)
+void AProjectile::ApplyDamage(AActor* Actor)
 {
-	ABorderItem* BorderItem = Cast<ABorderItem>(Actor);
-	if (BorderItem && BorderItem->IsAlive())
+	if (Actor)
 	{
-		BorderItem->DealDamage(Damage);
+		UGameplayStatics::ApplyDamage(Actor, GetDamage(), Instigator->GetController(), GetOwner(), UDamageType::StaticClass());
 	}
 }

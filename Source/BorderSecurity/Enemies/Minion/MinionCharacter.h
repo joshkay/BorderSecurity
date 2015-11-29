@@ -3,11 +3,11 @@
 #pragma once
 
 #include "GameFramework/Character.h"
-#include "Player/BorderSecurityCharacter.h"
+#include "Enemies/BorderSecurityEnemy.h"
 #include "MinionCharacter.generated.h"
 
 UCLASS()
-class BORDERSECURITY_API AMinionCharacter : public ABorderSecurityCharacter
+class BORDERSECURITY_API AMinionCharacter : public ABorderSecurityEnemy
 {
 	GENERATED_BODY()
 

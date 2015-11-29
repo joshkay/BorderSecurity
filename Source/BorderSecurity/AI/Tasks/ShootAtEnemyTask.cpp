@@ -48,5 +48,5 @@ void UShootAtEnemyTask::AttackEnemy(AMinionCharacter* Minion, ABorderItem* Enemy
 
 bool UShootAtEnemyTask::CanAttack(AMinionCharacter* Minion, ABorderItem* Enemy)
 {
-	return Enemy && Minion && !Minion->IsFiring() && Enemy->IsAlive();
+	return Enemy && Minion && !Minion->IsFiring() && Enemy->GetHealthComponent()->IsAlive();
 }

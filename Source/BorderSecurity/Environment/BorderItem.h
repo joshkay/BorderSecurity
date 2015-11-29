@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "Components/HealthComponent.h"
 #include "BorderItem.generated.h"
 
 UCLASS()
@@ -11,24 +12,20 @@ class BORDERSECURITY_API ABorderItem : public AActor
 	GENERATED_BODY()
 	
 public:	
-	ABorderItem();
+	ABorderItem(const FObjectInitializer& ObjectInitializer);
 
 	virtual void BeginPlay() override;
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser);
 
-	void DealDamage(float Amount);
-
-	FORCEINLINE float GetHealth() { return Health; }
-	FORCEINLINE bool IsAlive() { return Health > 0.f; }
+	FORCEINLINE UHealthComponent* GetHealthComponent() { return HealthComponent; }
 
 protected:
 	UPROPERTY(EditAnywhere, Category = Collision)
-	UBoxComponent* BoxCollider;
+	USceneComponent* ColliderComponent;
 
-	UPROPERTY(EditAnywhere, Category = Mesh)
-	UStaticMeshComponent* Mesh;
+	UPROPERTY(EditAnywhere, Category = MeshComponent)
+	UStaticMeshComponent* MeshComponent;
 
-	UPROPERTY(EditAnywhere, Category = Health)
-	float StartingHealth;
-
-	float Health;
+	UPROPERTY(EditAnywhere, Category = HP)
+	UHealthComponent* HealthComponent;
 };

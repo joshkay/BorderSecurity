@@ -11,6 +11,8 @@ ABorderSecurityCharacter::ABorderSecurityCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	CurrentRotation = FRotator::ZeroRotator;
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -33,6 +35,25 @@ void ABorderSecurityCharacter::Tick( float DeltaTime )
 	}*/
 
 	UpdateFireWeapon();
+}
+
+float ABorderSecurityCharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float ActualDamage = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+
+	// Apply damage and destroy if not alive
+	HealthComponent->TakeDamage(ActualDamage);
+	if (!HealthComponent->IsAlive())
+	{
+		Killed(EventInstigator, DamageCauser);
+	}
+
+	return ActualDamage;
+}
+
+void ABorderSecurityCharacter::Killed(AController* EventInstigator, AActor* DamageCauser)
+{
+	Destroy();
 }
 
 void ABorderSecurityCharacter::SetFireRotation(FRotator Rotation)
