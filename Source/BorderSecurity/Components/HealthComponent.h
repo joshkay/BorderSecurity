@@ -29,6 +29,8 @@ public:
 public:
 	FORCEINLINE bool IsAlive() { return HP > 0.f; }
 
+	FORCEINLINE bool HasArmor() { return MaxArmor > 0.f && Armor > 0.f; }
+
 	FORCEINLINE float GetHP() { return HP; }
 	FORCEINLINE float GetArmor() { return Armor; }
 

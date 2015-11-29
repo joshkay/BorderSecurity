@@ -7,6 +7,7 @@
 #include "Widgets/MoneyWidget.h"
 #include "Widgets/MoneyNotificationWidget.h"
 #include "Widgets/HealthBarWidget.h"
+#include "Widgets/BorderHealthWidget.h"
 #include "BorderSecurityHUD.generated.h"
 
 /**
@@ -35,8 +36,13 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Widgets)
 	TSubclassOf<UHealthBarWidget> HealthBarClass;
+
+	UPROPERTY(EditAnywhere, Category = Widgets)
+	TSubclassOf<UBorderHealthWidget> BorderHealthClass;
 	
 	UMoneyWidget* MoneyWidget;
+	UBorderHealthWidget* BorderHealthWidget;
+
 	TMap<AActor*, UMoneyNotificationWidget*> MoneyNotificationWidgets;
 	TMap<AActor*, UHealthBarWidget*> HealthBarWidgets;
 };

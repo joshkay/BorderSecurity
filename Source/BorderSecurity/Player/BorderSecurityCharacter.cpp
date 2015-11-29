@@ -20,6 +20,7 @@ void ABorderSecurityCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	bEnabled = true;
 	InitializeWeapon();
 }
 
@@ -34,11 +35,21 @@ void ABorderSecurityCharacter::Tick( float DeltaTime )
 		GEngine->GameViewport->Viewport->CaptureMouse(true);
 	}*/
 
+	if (!bEnabled)
+	{
+		return;
+	}
+	
 	UpdateFireWeapon();
 }
 
 float ABorderSecurityCharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+	if (!bEnabled)
+	{
+		return Damage;
+	}
+
 	float ActualDamage = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
 
 	// Apply damage and destroy if not alive
@@ -53,11 +64,22 @@ float ABorderSecurityCharacter::TakeDamage(float Damage, struct FDamageEvent con
 
 void ABorderSecurityCharacter::Killed(AController* EventInstigator, AActor* DamageCauser)
 {
-	Destroy();
+	GetMesh()->SetSimulatePhysics(true);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	SetActorTickEnabled(false);
+
+	bEnabled = false;
+
+	GetWorldTimerManager().SetTimer(DestroyTimerHandle, this, &ABorderSecurityCharacter::DestroyCharacter, TimeToDestroyAfterDeath, false);
 }
 
 void ABorderSecurityCharacter::SetFireRotation(FRotator Rotation)
 {
+	if (!bEnabled)
+	{
+		return;
+	}
+
 	CurrentRotation = Rotation;
 }
 
@@ -71,13 +93,28 @@ void ABorderSecurityCharacter::InitializeWeapon()
 	Weapon->AttachRootComponentToActor(this);
 }
 
+void ABorderSecurityCharacter::DestroyCharacter()
+{
+	Destroy();
+}
+
 void ABorderSecurityCharacter::StartFire()
 {
+	if (!bEnabled)
+	{
+		return;
+	}
+
 	bIsFiring = true;
 }
 
 void ABorderSecurityCharacter::StopFire()
 {
+	if (!bEnabled)
+	{
+		return;
+	}
+
 	bIsFiring = false;
 }
 

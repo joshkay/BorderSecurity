@@ -19,6 +19,16 @@ void ABorderSecurityHUD::PostInitializeComponents()
 				MoneyWidget->AddToViewport();
 			}
 		}
+
+		if (BorderHealthClass)
+		{
+			BorderHealthWidget = CreateWidget<UBorderHealthWidget>(Owner, BorderHealthClass);
+
+			if (BorderHealthWidget)
+			{
+				BorderHealthWidget->AddToViewport(1.f);
+			}
+		}
 	}
 }
 

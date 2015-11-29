@@ -35,7 +35,7 @@ void AProjectile::OnOverlap(class AActor* OtherActor, class UPrimitiveComponent*
 		
 		if (bDestroyOnCollision)
 		{
-			Destroy();
+			Destroy(true);
 		}
 	}
 }

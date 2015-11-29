@@ -33,8 +33,6 @@ FSlateColor UMoneyNotificationWidget::GetColorAndOpacitiy() const
 	FLinearColor Color = FLinearColor::White;
 	Color.A = 1.f - GetDisplayedPercentage();
 
-	GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::White, FString::Printf(TEXT("DISPLAYED: %f"), Color.A));
-
 	return FSlateColor(Color);
 }
 

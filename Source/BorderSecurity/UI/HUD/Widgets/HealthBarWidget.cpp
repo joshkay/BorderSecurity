@@ -27,7 +27,7 @@ FVector2D UHealthBarWidget::GetCurrentPosition() const
 
 float UHealthBarWidget::GetHealthPercentage() const
 {
-	float Health;
+	float Health = 0.f;
 
 	ABorderSecurityCharacter* BSCharacter = Cast<ABorderSecurityCharacter>(Owner);
 	if (BSCharacter)
@@ -40,7 +40,7 @@ float UHealthBarWidget::GetHealthPercentage() const
 
 float UHealthBarWidget::GetArmorPercentage() const
 {
-	float Armor;
+	float Armor = 0.f;
 
 	ABorderSecurityCharacter* BSCharacter = Cast<ABorderSecurityCharacter>(Owner);
 	if (BSCharacter)

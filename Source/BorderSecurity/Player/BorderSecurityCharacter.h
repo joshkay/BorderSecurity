@@ -30,6 +30,8 @@ public:
 	virtual void StopFire();
 
 	FORCEINLINE bool IsFiring() { return bIsFiring; }
+
+
 	FORCEINLINE UHealthComponent* GetHealthComponent() { return HealthComponent; }
 
 protected:
@@ -40,10 +42,19 @@ protected:
 	void UpdateFireWeapon();
 	void InitializeWeapon();
 
+	void DestroyCharacter();
+
 protected:
 	// Components
 	UPROPERTY(EditAnywhere, Category = HP)
 	UHealthComponent* HealthComponent;
+
+	UPROPERTY(EditAnywhere, Category = Death)
+	float TimeToDestroyAfterDeath;
+
+	bool bEnabled;
+
+	FTimerHandle DestroyTimerHandle;
 
 protected:
 	// The weapon to use for this character

@@ -81,11 +81,11 @@ void UHealthComponent::StartRegenArmorThenHealth()
 {
 	if (Armor < MaxArmor)
 	{
-		GetWorld()->GetTimerManager().SetTimer(ArmorRegenTimer, ArmorRegenTimeAfterDamage, false);
+		GetWorld()->GetTimerManager().SetTimer(ArmorRegenTimer, this, &UHealthComponent::StartArmorRegen, ArmorRegenTimeAfterDamage, false);
 	}
 	else if (HP < MaxHP)
 	{
-		GetWorld()->GetTimerManager().SetTimer(HPRegenTimer, HPRegenTimeAfterDamage, false);
+		GetWorld()->GetTimerManager().SetTimer(HPRegenTimer, this, &UHealthComponent::StartHPRegen, HPRegenTimeAfterDamage, false);
 	}
 }
 
@@ -93,11 +93,11 @@ void UHealthComponent::StartRegenHealthThenArmor()
 {
 	if (HP < MaxHP)
 	{
-		GetWorld()->GetTimerManager().SetTimer(HPRegenTimer, HPRegenTimeAfterDamage, false);
+		GetWorld()->GetTimerManager().SetTimer(HPRegenTimer, this, &UHealthComponent::StartHPRegen, HPRegenTimeAfterDamage, false);
 	}
 	else if (Armor < MaxArmor)
 	{
-		GetWorld()->GetTimerManager().SetTimer(ArmorRegenTimer, ArmorRegenTimeAfterDamage, false);
+		GetWorld()->GetTimerManager().SetTimer(ArmorRegenTimer, this, &UHealthComponent::StartArmorRegen, ArmorRegenTimeAfterDamage, false);
 	}
 }
 
@@ -105,11 +105,11 @@ void UHealthComponent::StartRegenArmorAndHealth()
 {
 	if (Armor < MaxArmor)
 	{
-		GetWorld()->GetTimerManager().SetTimer(ArmorRegenTimer, ArmorRegenTimeAfterDamage, false);
+		GetWorld()->GetTimerManager().SetTimer(ArmorRegenTimer, this, &UHealthComponent::StartArmorRegen, ArmorRegenTimeAfterDamage, false);
 	}
 	if (HP < MaxHP)
 	{
-		GetWorld()->GetTimerManager().SetTimer(HPRegenTimer, HPRegenTimeAfterDamage, false);
+		GetWorld()->GetTimerManager().SetTimer(HPRegenTimer, this, &UHealthComponent::StartHPRegen, HPRegenTimeAfterDamage, false);
 	}
 }
 
