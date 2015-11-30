@@ -15,6 +15,10 @@ class BORDERSECURITY_API ABorderTower : public ABorderItem
 	
 public:
 	ABorderTower(const FObjectInitializer& ObjectInitializer);
+
+	FVector GetPlayerLocation();
 	
-	
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Player)
+	USceneComponent* PlayerLocationComponent;
 };

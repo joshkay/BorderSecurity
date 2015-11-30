@@ -31,7 +31,7 @@ public:
 
 	FORCEINLINE bool IsFiring() { return bIsFiring; }
 
-
+	FORCEINLINE AWeapon* GetWeapon() { return Weapon; }
 	FORCEINLINE UHealthComponent* GetHealthComponent() { return HealthComponent; }
 
 protected:

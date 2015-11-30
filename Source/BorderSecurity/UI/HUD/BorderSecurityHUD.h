@@ -20,6 +20,7 @@ class BORDERSECURITY_API ABorderSecurityHUD : public AHUD
 	
 public:
 	void PostInitializeComponents() override;
+	void Destroyed() override;
 
 	void AddHealthBar(AActor* Owner);
 	void RemoveHealthBar(AActor* Owner);

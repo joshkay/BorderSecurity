@@ -6,5 +6,11 @@
 ABorderTower::ABorderTower(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer.SetDefaultSubobjectClass<UCapsuleComponent>(TEXT("ColliderComponent")))
 {
+	PlayerLocationComponent = CreateDefaultSubobject<USceneComponent>(TEXT("PlayerLocationComponent"));
+	PlayerLocationComponent->AttachTo(RootComponent);
+}
 
+FVector ABorderTower::GetPlayerLocation()
+{
+	return PlayerLocationComponent->GetComponentLocation();
 }

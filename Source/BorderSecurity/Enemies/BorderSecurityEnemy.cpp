@@ -24,6 +24,17 @@ void ABorderSecurityEnemy::Killed(AController* EventInstigator, AActor* DamageCa
 {
 	Super::Killed(EventInstigator, DamageCauser);
 
+	AHUD* HUD = GetWorld()->GetFirstPlayerController()->GetHUD();
+	ABorderSecurityHUD* BSHUD = nullptr;
+	if (HUD)
+	{
+		BSHUD = Cast<ABorderSecurityHUD>(HUD);
+		if (BSHUD)
+		{
+			BSHUD->RemoveHealthBar(this);
+		}
+	}
+
 	if (EventInstigator == GetWorld()->GetFirstPlayerController() && EventInstigator->PlayerState)
 	{
 		ABorderSecurityPlayerState* PlayerState = Cast<ABorderSecurityPlayerState>(EventInstigator->PlayerState);
@@ -32,15 +43,9 @@ void ABorderSecurityEnemy::Killed(AController* EventInstigator, AActor* DamageCa
 			PlayerState->Money += MoneyValue;
 		}
 
-		AHUD* HUD = EventInstigator->CastToPlayerController()->GetHUD();
-		if (HUD)
+		if (BSHUD)
 		{
-			ABorderSecurityHUD* BSHUD = Cast<ABorderSecurityHUD>(HUD);
-			if (BSHUD)
-			{
-				BSHUD->AddMoneyNotification(this, MoneyValue);
-				BSHUD->RemoveHealthBar(this);
-			}
+			BSHUD->AddMoneyNotification(this, MoneyValue);
 		}
 	}
 }

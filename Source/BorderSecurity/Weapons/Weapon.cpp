@@ -7,7 +7,7 @@ AWeapon::AWeapon()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	TimeSinceLastFire = 0.f;
+	TimeSinceLastAttack = 0.f;
 }
 
 void AWeapon::BeginPlay()
@@ -19,15 +19,15 @@ void AWeapon::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	TimeSinceLastFire += DeltaTime;
+	TimeSinceLastAttack += DeltaTime;
 }
 
-bool AWeapon::CanFire()
+bool AWeapon::CanAttack()
 {
-	return TimeSinceLastFire >= RateOfFire;
+	return TimeSinceLastAttack >= AttackSpeed;
 }
 
-void AWeapon::Fire()
+void AWeapon::Attack()
 {
 	// Spawn a projectile when weapon fires!
 	FActorSpawnParameters SpawnParams;
@@ -36,10 +36,10 @@ void AWeapon::Fire()
 
 	GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation(), GetActorRotation(), SpawnParams);
 
-	Fired();
+	Attacked();
 }
 
-void AWeapon::Fire(FRotator Direction)
+void AWeapon::Attack(FRotator Direction)
 {
 	// Spawn a projectile when weapon fires!
 	FActorSpawnParameters SpawnParams;
@@ -48,10 +48,10 @@ void AWeapon::Fire(FRotator Direction)
 
 	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation(), Direction, SpawnParams);
 
-	Fired();
+	Attacked();
 }
 
-void AWeapon::Fired()
+void AWeapon::Attacked()
 {
-	TimeSinceLastFire = 0.f;
+	TimeSinceLastAttack = 0.f;
 }

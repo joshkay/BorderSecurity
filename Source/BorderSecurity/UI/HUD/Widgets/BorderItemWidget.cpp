@@ -18,7 +18,7 @@ void UBorderItemWidget::NativeConstruct()
 
 ESlateVisibility UBorderItemWidget::GetVisibility() const
 {
-	if (Owner)
+	if (Owner->IsValidLowLevel())
 	{
 		ABorderItem* BorderItem = Cast<ABorderItem>(Owner);
 		if (BorderItem)
@@ -46,7 +46,7 @@ float UBorderItemWidget::GetHealthPercentage() const
 {
 	float Health = 0.f;
 
-	if (Owner)
+	if (Owner->IsValidLowLevel())
 	{
 		ABorderItem* BorderItem = Cast<ABorderItem>(Owner);
 		if (BorderItem)
@@ -62,7 +62,7 @@ float UBorderItemWidget::GetArmorPercentage() const
 {
 	float Armor = 0.f;
 
-	if (Owner)
+	if (Owner->IsValidLowLevel())
 	{
 		ABorderItem* BorderItem = Cast<ABorderItem>(Owner);
 		if (BorderItem)
@@ -76,7 +76,7 @@ float UBorderItemWidget::GetArmorPercentage() const
 
 ESlateVisibility UBorderItemWidget::GetArmorVisibility() const
 {
-	if (Owner)
+	if (Owner->IsValidLowLevel())
 	{
 		ABorderItem* BorderItem = Cast<ABorderItem>(Owner);
 		if (BorderItem)

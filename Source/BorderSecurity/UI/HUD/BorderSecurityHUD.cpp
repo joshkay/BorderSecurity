@@ -32,6 +32,22 @@ void ABorderSecurityHUD::PostInitializeComponents()
 	}
 }
 
+void ABorderSecurityHUD::Destroyed()
+{
+	Super::Destroyed();
+
+	if (MoneyWidget)
+	{
+		MoneyWidget->RemoveFromViewport();
+		MoneyWidget = NULL;
+	}
+	if (BorderHealthWidget)
+	{
+		BorderHealthWidget->RemoveFromViewport();
+		BorderHealthWidget = NULL;
+	}
+}
+
 void ABorderSecurityHUD::AddHealthBar(AActor* Owner)
 {
 	APlayerController* PlayerController = GetOwningPlayerController();

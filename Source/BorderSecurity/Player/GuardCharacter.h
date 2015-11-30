@@ -4,6 +4,7 @@
 
 #include "GameFramework/Character.h"
 #include "BorderSecurityCharacter.h"
+#include "Environment/BorderTower.h"
 #include "GuardCharacter.generated.h"
 
 UCLASS()
@@ -35,7 +36,17 @@ protected:
 
 	// Update rotation based on mouse location
 	void UpdateRotation();
-	
+
+	void LoadTowers();
+
+	UFUNCTION()
+	void MoveLeft();
+	UFUNCTION()
+	void MoveRight();
+
+	int32 TowerUsed;
+	TArray<ABorderTower*> BorderTowers;
+
 	// Speed to turn the character / camera at edge of screen
 	float TurnSpeed;
 

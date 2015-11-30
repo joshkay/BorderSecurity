@@ -23,6 +23,8 @@ AGuardCharacter::AGuardCharacter()
 void AGuardCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	LoadTowers();
 }
 
 // Called every frame
@@ -41,6 +43,8 @@ void AGuardCharacter::SetupPlayerInputComponent(class UInputComponent* InputComp
 	//InputComponent->BindAxis(TEXT("TurnRight"), this, &ABorderSecurityCharacter::TurnRight);
 	InputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &AGuardCharacter::StartFire);
 	InputComponent->BindAction(TEXT("Fire"), IE_Released, this, &AGuardCharacter::StopFire);
+	InputComponent->BindAction(TEXT("MoveLeft"), IE_Released, this, &AGuardCharacter::MoveLeft);
+	InputComponent->BindAction(TEXT("MoveRight"), IE_Released, this, &AGuardCharacter::MoveRight);
 }
 
 void AGuardCharacter::UpdateRotation()
@@ -119,4 +123,57 @@ float AGuardCharacter::GetRotationFromMouse()
 	}
 
 	return 0.f;
+}
+
+void AGuardCharacter::LoadTowers()
+{
+	for (TActorIterator<ABorderTower> BorderActorItr(GetWorld()); BorderActorItr; ++BorderActorItr)
+	{
+		ABorderTower* BorderItem = *BorderActorItr;
+		if (BorderItem)
+		{
+			BorderTowers.Add(BorderItem);
+		}
+	}
+
+	BorderTowers.Sort([](const ABorderTower& BorderItem1, const ABorderTower& BorderItem2) {
+		return BorderItem1.GetActorLocation().X > BorderItem2.GetActorLocation().X;
+	});
+
+	TowerUsed = 2;
+}
+
+void AGuardCharacter::MoveLeft()
+{
+	int32 NextTower = TowerUsed - 1;
+	if (BorderTowers.IsValidIndex(NextTower))
+	{
+		TowerUsed = NextTower;
+		if (BorderTowers[NextTower]->IsValidLowLevel() && BorderTowers[NextTower]->GetHealthComponent()->IsAlive())
+		{
+			SetActorLocation(BorderTowers[NextTower]->GetPlayerLocation());
+		}
+		else
+		{
+			MoveLeft();
+		}
+	}
+
+}
+
+void AGuardCharacter::MoveRight()
+{
+	int32 NextTower = TowerUsed + 1;
+	if (BorderTowers.IsValidIndex(NextTower))
+	{
+		TowerUsed = NextTower;
+		if (BorderTowers[NextTower]->IsValidLowLevel() && BorderTowers[NextTower]->GetHealthComponent()->IsAlive())
+		{
+			SetActorLocation(BorderTowers[NextTower]->GetPlayerLocation());
+		}
+		else
+		{
+			MoveRight();
+		}
+	}
 }

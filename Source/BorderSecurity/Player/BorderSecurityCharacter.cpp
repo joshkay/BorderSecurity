@@ -22,18 +22,15 @@ void ABorderSecurityCharacter::BeginPlay()
 
 	bEnabled = true;
 	InitializeWeapon();
+
+	GEngine->GameViewport->SetCaptureMouseOnClick(EMouseCaptureMode::CapturePermanently);
+	GEngine->GameViewport->Viewport->LockMouseToViewport(true);
+	GEngine->GameViewport->Viewport->CaptureMouse(true);
 }
 
 void ABorderSecurityCharacter::Tick( float DeltaTime )
 {
 	Super::Tick(DeltaTime);
-
-	/*if (!GEngine->GameViewport->Viewport->HasMouseCapture())
-	{
-		GEngine->GameViewport->SetCaptureMouseOnClick(EMouseCaptureMode::CapturePermanently);
-		GEngine->GameViewport->Viewport->LockMouseToViewport(true);
-		GEngine->GameViewport->Viewport->CaptureMouse(true);
-	}*/
 
 	if (!bEnabled)
 	{
@@ -64,6 +61,7 @@ float ABorderSecurityCharacter::TakeDamage(float Damage, struct FDamageEvent con
 
 void ABorderSecurityCharacter::Killed(AController* EventInstigator, AActor* DamageCauser)
 {
+	GetMesh()->SetCollisionProfileName(TEXT("Ragdoll"));
 	GetMesh()->SetSimulatePhysics(true);
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SetActorTickEnabled(false);
@@ -123,9 +121,9 @@ void ABorderSecurityCharacter::UpdateFireWeapon()
 	if (bIsFiring)
 	{
 		// fire the characters weapon if its ready
-		if (Weapon && Weapon->CanFire())
+		if (Weapon && Weapon->CanAttack())
 		{
-			Weapon->Fire(CurrentRotation);
+			Weapon->Attack(CurrentRotation);
 		}
 	}
 }

@@ -18,21 +18,22 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	bool CanFire();
+	virtual bool CanAttack();
 
-	void Fire();
-	void Fire(FRotator Direction);
+	virtual void Attack();
+	virtual void Attack(FRotator Direction);
+
+	FORCEINLINE float GetAttackSpeed() { return AttackSpeed; }
 
 protected:
+	void Attacked();
 
-	void Fired();
-
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float RateOfFire;
+	UPROPERTY(EditAnywhere, Category = Attack)
+	float AttackSpeed;
 
 	UPROPERTY(EditAnywhere, Category = Projectile)
 	TSubclassOf<AProjectile> ProjectileClass;
 
 	// Time since the last projectile was shot
-	float TimeSinceLastFire;
+	float TimeSinceLastAttack;
 };
