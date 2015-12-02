@@ -23,6 +23,9 @@ public:
 
 	float GetDamage();
 
+	void UpgradeDamage(float Amount);
+	void UpgradeSpeed(float Amount);
+
 protected:
 	UFUNCTION()
 	void TimeIsUp();

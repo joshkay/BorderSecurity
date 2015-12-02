@@ -44,6 +44,11 @@ protected:
 	UFUNCTION()
 	void MoveRight();
 
+	void WeaponInitialized(AWeapon* Weapon) override;
+	void SelectWeapon1();
+	void SelectWeapon2();
+	void SelectWeapon3();
+
 	int32 TowerUsed;
 	TArray<ABorderTower*> BorderTowers;
 

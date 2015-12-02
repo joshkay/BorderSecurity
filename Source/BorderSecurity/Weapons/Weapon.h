@@ -21,18 +21,21 @@ public:
 	virtual bool CanAttack();
 
 	virtual void Attack();
-	virtual void Attack(FRotator Direction);
 
+	FORCEINLINE void SetAttackDirection(FRotator Direction) { AttackDirection = Direction; }
 	FORCEINLINE float GetAttackSpeed() { return AttackSpeed; }
+	FORCEINLINE FText GetDisplayName() { return DisplayName; }
 
 protected:
 	void Attacked();
 
+	UPROPERTY(EditDefaultsOnly, Category = Display)
+	FText DisplayName;
+
 	UPROPERTY(EditAnywhere, Category = Attack)
 	float AttackSpeed;
 
-	UPROPERTY(EditAnywhere, Category = Projectile)
-	TSubclassOf<AProjectile> ProjectileClass;
+	FRotator AttackDirection;
 
 	// Time since the last projectile was shot
 	float TimeSinceLastAttack;

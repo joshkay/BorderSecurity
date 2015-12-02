@@ -3,10 +3,49 @@
 #include "BorderSecurity.h"
 #include "ProjectileWeapon.h"
 
-ProjectileWeapon::ProjectileWeapon()
+void AProjectileWeapon::BeginPlay()
 {
+	Super::BeginPlay();
+
+	DamageUpgrade = 1.f;
+	SpeedUpgrade = 1.f;
 }
 
-ProjectileWeapon::~ProjectileWeapon()
+void AProjectileWeapon::Attack()
 {
+	Super::Attack();
+
+	// Spawn a projectile when weapon fires!
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Instigator = Instigator;
+	SpawnParams.Owner = this;
+
+	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation(), AttackDirection, SpawnParams);
+	Projectile->UpgradeDamage(DamageUpgrade);
+	Projectile->UpgradeSpeed(SpeedUpgrade);
+}
+
+void AProjectileWeapon::ApplyUpgrade(EUpgradeType Type, float Amount)
+{
+	Super::ApplyUpgrade(Type, Amount);
+
+	switch (Type)
+	{
+	case EUpgradeType::UT_Damage:
+		UpgradeDamage(Amount);
+		return;
+	case EUpgradeType::UT_Speed:
+		UpgradeSpeed(Amount);
+		return;
+	}
+}
+
+void AProjectileWeapon::UpgradeDamage(float Amount)
+{
+	DamageUpgrade *= Amount;
+}
+
+void AProjectileWeapon::UpgradeSpeed(float Amount)
+{
+	SpeedUpgrade *= Amount;
 }

@@ -7,6 +7,7 @@
 #include "Widgets/MoneyWidget.h"
 #include "Widgets/MoneyNotificationWidget.h"
 #include "Widgets/HealthBarWidget.h"
+#include "Widgets/WeaponHolderWidget.h"
 #include "Widgets/BorderHealthWidget.h"
 #include "BorderSecurityHUD.generated.h"
 
@@ -28,6 +29,8 @@ public:
 	void AddMoneyNotification(AActor* Owner, int32 Amount);
 	void RemoveMoneyNotification(AActor* Owner);
 
+	void AddWeapon(AWeapon* Weapon);
+
 protected:
 	UPROPERTY(EditAnywhere, Category = Widgets)
 	TSubclassOf<UMoneyWidget> MoneyClass;
@@ -40,9 +43,13 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Widgets)
 	TSubclassOf<UBorderHealthWidget> BorderHealthClass;
+
+	UPROPERTY(EditAnywhere, Category = Widgets)
+	TSubclassOf<UWeaponHolderWidget> WeaponHolderClass;
 	
 	UMoneyWidget* MoneyWidget;
 	UBorderHealthWidget* BorderHealthWidget;
+	UWeaponHolderWidget* WeaponHolderWidget;
 
 	TMap<AActor*, UMoneyNotificationWidget*> MoneyNotificationWidgets;
 	TMap<AActor*, UHealthBarWidget*> HealthBarWidgets;

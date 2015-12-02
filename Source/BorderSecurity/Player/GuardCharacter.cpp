@@ -2,6 +2,7 @@
 
 #include "BorderSecurity.h"
 #include "BorderSecurityPlayerController.h"
+#include "UI/HUD/BorderSecurityHUD.h"
 #include "GuardCharacter.h"
 
 // Sets default values
@@ -41,6 +42,9 @@ void AGuardCharacter::SetupPlayerInputComponent(class UInputComponent* InputComp
 	Super::SetupPlayerInputComponent(InputComponent);
 
 	//InputComponent->BindAxis(TEXT("TurnRight"), this, &ABorderSecurityCharacter::TurnRight);
+	InputComponent->BindAction(TEXT("SelectWeapon1"), IE_Released, this, &AGuardCharacter::SelectWeapon1);
+	InputComponent->BindAction(TEXT("SelectWeapon2"), IE_Released, this, &AGuardCharacter::SelectWeapon2);
+	InputComponent->BindAction(TEXT("SelectWeapon3"), IE_Released, this, &AGuardCharacter::SelectWeapon3);
 	InputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &AGuardCharacter::StartFire);
 	InputComponent->BindAction(TEXT("Fire"), IE_Released, this, &AGuardCharacter::StopFire);
 	InputComponent->BindAction(TEXT("MoveLeft"), IE_Released, this, &AGuardCharacter::MoveLeft);
@@ -176,4 +180,34 @@ void AGuardCharacter::MoveRight()
 			MoveRight();
 		}
 	}
+}
+
+void AGuardCharacter::WeaponInitialized(AWeapon* Weapon)
+{
+	Super::WeaponInitialized(Weapon);
+
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	if (PlayerController)
+	{
+		ABorderSecurityHUD* HUD = Cast<ABorderSecurityHUD>(PlayerController->GetHUD());
+		if (HUD)
+		{
+			HUD->AddWeapon(Weapon);
+		}
+	}
+}
+
+void AGuardCharacter::SelectWeapon1()
+{
+	SelectWeaponIndex(0);
+}
+
+void AGuardCharacter::SelectWeapon2()
+{
+	SelectWeaponIndex(1);
+}
+
+void AGuardCharacter::SelectWeapon3()
+{
+	SelectWeaponIndex(2);
 }

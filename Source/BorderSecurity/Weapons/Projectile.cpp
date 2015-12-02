@@ -50,6 +50,16 @@ float AProjectile::GetDamage()
 	return Damage;
 }
 
+void AProjectile::UpgradeDamage(float Amount)
+{
+	Damage *= Amount;
+}
+
+void AProjectile::UpgradeSpeed(float Amount)
+{
+	MovementComponent->InitialSpeed *= Amount;
+}
+
 void AProjectile::TimeIsUp()
 {
 	Destroy();

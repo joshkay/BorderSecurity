@@ -21,7 +21,7 @@ void ABorderSecurityCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	bEnabled = true;
-	InitializeWeapon();
+	InitializeWeapons();
 
 	GEngine->GameViewport->SetCaptureMouseOnClick(EMouseCaptureMode::CapturePermanently);
 	GEngine->GameViewport->Viewport->LockMouseToViewport(true);
@@ -81,14 +81,50 @@ void ABorderSecurityCharacter::SetFireRotation(FRotator Rotation)
 	CurrentRotation = Rotation;
 }
 
-void ABorderSecurityCharacter::InitializeWeapon()
+
+void ABorderSecurityCharacter::InitializeWeapons()
+{
+	SelectedWeaponIndex = 0;
+	for (TSubclassOf<AWeapon> WeaponClass : WeaponClasses)
+	{
+		InitializeWeapon(WeaponClass);
+	}
+}
+
+void ABorderSecurityCharacter::InitializeWeapon(TSubclassOf<AWeapon> WeaponClass)
 {
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.Instigator = this;
 	SpawnParams.Owner = this;
 
-	Weapon = GetWorld()->SpawnActor<AWeapon>(WeaponClass, FVector::ZeroVector, GetControlRotation(), SpawnParams);
+	AWeapon* Weapon = GetWorld()->SpawnActor<AWeapon>(WeaponClass, FVector::ZeroVector, GetControlRotation(), SpawnParams);
 	Weapon->AttachRootComponentToActor(this);
+
+	Weapons.Add(Weapon);
+
+	WeaponInitialized(Weapon);
+}
+
+void ABorderSecurityCharacter::WeaponInitialized(AWeapon* Weapon)
+{
+
+}
+
+void ABorderSecurityCharacter::SelectWeaponIndex(int32 Index)
+{
+	if (Weapons.IsValidIndex(Index))
+	{
+		SelectedWeaponIndex = Index;
+	}
+}
+
+void ABorderSecurityCharacter::SelectWeapon(AWeapon* NewWeapon)
+{
+	int32 Index = Weapons.Find(NewWeapon);
+	if (Weapons.IsValidIndex(Index))
+	{
+		SelectedWeaponIndex = Index;
+	}
 }
 
 void ABorderSecurityCharacter::DestroyCharacter()
@@ -116,14 +152,25 @@ void ABorderSecurityCharacter::StopFire()
 	bIsFiring = false;
 }
 
+AWeapon* ABorderSecurityCharacter::GetSelectedWeapon()
+{
+	if (Weapons.IsValidIndex(SelectedWeaponIndex))
+	{
+		return Weapons[SelectedWeaponIndex];
+	}
+	return nullptr;
+}
+
 void ABorderSecurityCharacter::UpdateFireWeapon()
 {
 	if (bIsFiring)
 	{
+		AWeapon* Weapon = GetSelectedWeapon();
 		// fire the characters weapon if its ready
 		if (Weapon && Weapon->CanAttack())
 		{
-			Weapon->Attack(CurrentRotation);
+			Weapon->SetAttackDirection(CurrentRotation);
+			Weapon->Attack();
 		}
 	}
 }

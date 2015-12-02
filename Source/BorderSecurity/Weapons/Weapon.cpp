@@ -29,25 +29,6 @@ bool AWeapon::CanAttack()
 
 void AWeapon::Attack()
 {
-	// Spawn a projectile when weapon fires!
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.Instigator = Instigator;
-	SpawnParams.Owner = this;
-
-	GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation(), GetActorRotation(), SpawnParams);
-
-	Attacked();
-}
-
-void AWeapon::Attack(FRotator Direction)
-{
-	// Spawn a projectile when weapon fires!
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.Instigator = Instigator;
-	SpawnParams.Owner = this;
-
-	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation(), Direction, SpawnParams);
-
 	Attacked();
 }
 

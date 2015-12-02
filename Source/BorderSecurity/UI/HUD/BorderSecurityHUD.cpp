@@ -29,6 +29,16 @@ void ABorderSecurityHUD::PostInitializeComponents()
 				BorderHealthWidget->AddToViewport(1.f);
 			}
 		}
+
+		if (WeaponHolderClass)
+		{
+			WeaponHolderWidget = CreateWidget<UWeaponHolderWidget>(Owner, WeaponHolderClass);
+
+			if (WeaponHolderWidget)
+			{
+				WeaponHolderWidget->AddToViewport();
+			}
+		}
 	}
 }
 
@@ -45,6 +55,11 @@ void ABorderSecurityHUD::Destroyed()
 	{
 		BorderHealthWidget->RemoveFromViewport();
 		BorderHealthWidget = NULL;
+	}
+	if (WeaponHolderWidget)
+	{
+		WeaponHolderWidget->RemoveFromViewport();
+		WeaponHolderWidget = NULL;
 	}
 }
 
@@ -133,5 +148,13 @@ void ABorderSecurityHUD::RemoveMoneyNotification(AActor* Owner)
 		MoneyNotification = NULL;
 
 		MoneyNotificationWidgets.Remove(Owner);
+	}
+}
+
+void ABorderSecurityHUD::AddWeapon(AWeapon* Weapon)
+{
+	if (WeaponHolderWidget)
+	{
+		WeaponHolderWidget->AddWeapon(Weapon);
 	}
 }

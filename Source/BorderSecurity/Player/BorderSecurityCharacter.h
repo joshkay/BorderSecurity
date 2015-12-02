@@ -29,9 +29,12 @@ public:
 	UFUNCTION()
 	virtual void StopFire();
 
+	void SelectWeaponIndex(int32 Index);
+	void SelectWeapon(AWeapon* NewWeapon);
+	AWeapon* GetSelectedWeapon();
+
 	FORCEINLINE bool IsFiring() { return bIsFiring; }
 
-	FORCEINLINE AWeapon* GetWeapon() { return Weapon; }
 	FORCEINLINE UHealthComponent* GetHealthComponent() { return HealthComponent; }
 
 protected:
@@ -40,7 +43,10 @@ protected:
 
 	// Weapons
 	void UpdateFireWeapon();
-	void InitializeWeapon();
+
+	void InitializeWeapons();
+	void InitializeWeapon(TSubclassOf<AWeapon> WeaponClass);
+	virtual void WeaponInitialized(AWeapon* Weapon);
 
 	void DestroyCharacter();
 
@@ -59,7 +65,7 @@ protected:
 protected:
 	// The weapon to use for this character
 	UPROPERTY(EditAnywhere, Category = Weapons, BlueprintReadWrite)
-	TSubclassOf<AWeapon> WeaponClass;
+	TArray<TSubclassOf<AWeapon>> WeaponClasses;
 
 	// Direction from mouse to world
 	FRotator CurrentRotation;
@@ -68,5 +74,7 @@ protected:
 	bool bIsFiring;
 
 	// Current weapon of player
-	AWeapon* Weapon;
+	int32 SelectedWeaponIndex;
+
+	TArray<AWeapon*> Weapons;
 };

@@ -14,7 +14,7 @@ void UMinionAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		Speed = Character->GetVelocity().Size();
 		bFiring = Character->IsFiring();
 
-		AWeapon* Weapon = Character->GetWeapon();
+		AWeapon* Weapon = Character->GetSelectedWeapon();
 		if (Weapon)
 		{
 			RateOfFire = Weapon->GetAttackSpeed();
