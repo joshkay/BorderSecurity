@@ -6,13 +6,12 @@
 
 AProjectile::AProjectile()
 {
-	//PrimaryActorTick.bCanEverTick = true;	
-	MeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MeshComponent"));
-	RootComponent = MeshComponent;
+	//MeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMeshComponent"));
+	//RootComponent = MeshComponent;
 
-	ColliderComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("ColliderComponent"));
+	ColliderComponent = CreateDefaultSubobject<USphereComponent>(TEXT("ColliderComponent"));
 	ColliderComponent->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnOverlap);
-	ColliderComponent->AttachTo(RootComponent);
+	RootComponent = ColliderComponent;
 
 	MovementComponent = CreateDefaultSubobject<UThrownMovementComponent>(TEXT("MovementComponent"));
 }
@@ -35,7 +34,7 @@ void AProjectile::OnOverlap(class AActor* OtherActor, class UPrimitiveComponent*
 		
 		if (bDestroyOnCollision)
 		{
-			Destroy(true);
+			DestroyProjectile();
 		}
 	}
 }
@@ -62,13 +61,18 @@ void AProjectile::UpgradeSpeed(float Amount)
 
 void AProjectile::TimeIsUp()
 {
-	Destroy();
+	DestroyProjectile();
 }
 
 void AProjectile::ApplyDamage(AActor* Actor)
 {
-	if (Actor)
+	if (Actor && Instigator)
 	{
 		UGameplayStatics::ApplyDamage(Actor, GetDamage(), Instigator->GetController(), GetOwner(), UDamageType::StaticClass());
 	}
+}
+
+void AProjectile::DestroyProjectile()
+{
+	Destroy(true);
 }

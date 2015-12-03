@@ -23,22 +23,23 @@ public:
 
 	float GetDamage();
 
-	void UpgradeDamage(float Amount);
-	void UpgradeSpeed(float Amount);
+	virtual void UpgradeDamage(float Amount);
+	virtual void UpgradeSpeed(float Amount);
 
 protected:
 	UFUNCTION()
 	void TimeIsUp();
 
 	void ApplyDamage(AActor* Actor);
+	virtual void DestroyProjectile();
 
 	// Box collider on projectile
 	UPROPERTY(EditAnywhere, Category = Collision)
-	UBoxComponent* ColliderComponent;
+	USphereComponent* ColliderComponent;
 
 	// Mesh for projectile
-	UPROPERTY(VisibleAnywhere, Category = Mesh)
-	USkeletalMeshComponent* MeshComponent;
+	//UPROPERTY(VisibleAnywhere, Category = Mesh)
+	//UMeshComponent* MeshComponent;
 
 	// Movement
 	UPROPERTY(VisibleAnywhere, Category = Movement)
