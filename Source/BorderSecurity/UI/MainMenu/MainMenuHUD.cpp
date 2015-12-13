@@ -21,6 +21,7 @@ void AMainMenuHUD::Destroyed()
 void AMainMenuHUD::ShowMainMenu()
 {
 	HideHelp();
+	HideCredits();
 
 	APlayerController* Owner = GetOwningPlayerController();
 	if (Owner)
@@ -55,7 +56,7 @@ void AMainMenuHUD::ShowHelp()
 	{
 		if (HelpClass)
 		{
-			HelpWidget = CreateWidget<UHelpWidget>(Owner, HelpClass);
+			HelpWidget = CreateWidget<UInfoWidget>(Owner, HelpClass);
 
 			if (HelpWidget)
 			{
@@ -71,5 +72,33 @@ void AMainMenuHUD::HideHelp()
 	{
 		HelpWidget->RemoveFromViewport();
 		HelpWidget = NULL;
+	}
+}
+
+void AMainMenuHUD::ShowCredits()
+{
+	HideMainMenu();
+
+	APlayerController* Owner = GetOwningPlayerController();
+	if (Owner)
+	{
+		if (CreditsClass)
+		{
+			CreditsWidget = CreateWidget<UInfoWidget>(Owner, CreditsClass);
+
+			if (CreditsWidget)
+			{
+				CreditsWidget->AddToViewport();
+			}
+		}
+	}
+}
+
+void AMainMenuHUD::HideCredits()
+{
+	if (CreditsWidget)
+	{
+		CreditsWidget->RemoveFromViewport();
+		CreditsWidget = NULL;
 	}
 }

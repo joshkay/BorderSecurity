@@ -3,13 +3,13 @@
 #pragma once
 
 #include "Blueprint/UserWidget.h"
-#include "HelpWidget.generated.h"
+#include "InfoWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class BORDERSECURITY_API UHelpWidget : public UUserWidget
+class BORDERSECURITY_API UInfoWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
@@ -21,5 +21,5 @@ protected:
 	UButton* GetBackButton();
 	
 	UFUNCTION()
-	void OnHelpClicked();
+	void OnBackClicked();
 };

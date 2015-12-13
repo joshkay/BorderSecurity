@@ -10,6 +10,7 @@ void UMainMenuWidget::NativeConstruct()
 	GetPlayButton()->OnClicked.AddDynamic(this, &UMainMenuWidget::OnPlayClicked);
 	GetHelpButton()->OnClicked.AddDynamic(this, &UMainMenuWidget::OnHelpClicked);
 	GetQuitButton()->OnClicked.AddDynamic(this, &UMainMenuWidget::OnQuitClicked);
+	GetCreditsButton()->OnClicked.AddDynamic(this, &UMainMenuWidget::OnCreditsClicked);
 }
 
 void UMainMenuWidget::OnPlayClicked()
@@ -29,4 +30,13 @@ void UMainMenuWidget::OnHelpClicked()
 void UMainMenuWidget::OnQuitClicked()
 {
 	GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
+}
+
+void UMainMenuWidget::OnCreditsClicked()
+{
+	AMainMenuHUD* HUD = Cast<AMainMenuHUD>(GetOwningPlayer()->GetHUD());
+	if (HUD)
+	{
+		HUD->ShowCredits();
+	}
 }

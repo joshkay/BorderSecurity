@@ -1,16 +1,16 @@
 // Josh Kay 2015
 
 #include "BorderSecurity.h"
-#include "HelpWidget.h"
+#include "InfoWidget.h"
 
-void UHelpWidget::NativeConstruct()
+void UInfoWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	GetBackButton()->OnClicked.AddDynamic(this, &UHelpWidget::OnHelpClicked);
+	GetBackButton()->OnClicked.AddDynamic(this, &UInfoWidget::OnBackClicked);
 }
 
-void UHelpWidget::OnHelpClicked()
+void UInfoWidget::OnBackClicked()
 {
 	AMainMenuHUD* HUD = Cast<AMainMenuHUD>(GetOwningPlayer()->GetHUD());
 	if (HUD)

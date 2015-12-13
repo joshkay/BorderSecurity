@@ -36,6 +36,13 @@ void AGuardCharacter::Tick(float DeltaTime)
 	UpdateRotation();
 }
 
+void AGuardCharacter::Destroyed()
+{
+	Super::Destroyed();
+
+	UGameplayStatics::OpenLevel(this, TEXT("/Game/Maps/MainMenu"), false, FString());
+}
+
 // Called to bind functionality to input
 void AGuardCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {

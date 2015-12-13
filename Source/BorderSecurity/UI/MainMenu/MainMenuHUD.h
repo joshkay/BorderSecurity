@@ -4,7 +4,7 @@
 
 #include "GameFramework/HUD.h"
 #include "Widgets/MainMenuWidget.h"
-#include "Widgets/HelpWidget.h"
+#include "Widgets/InfoWidget.h"
 #include "MainMenuHUD.generated.h"
 
 UCLASS()
@@ -22,13 +22,20 @@ public:
 	void ShowHelp();
 	void HideHelp();
 
+	void ShowCredits();
+	void HideCredits();
+
 protected:
 	UPROPERTY(EditAnywhere, Category = Widgets)
 	TSubclassOf<UMainMenuWidget> MainMenuClass;
 
 	UPROPERTY(EditAnywhere, Category = Widgets)
-	TSubclassOf<UHelpWidget> HelpClass;
+	TSubclassOf<UInfoWidget> HelpClass;
+
+	UPROPERTY(EditAnywhere, Category = Widgets)
+	TSubclassOf<UInfoWidget> CreditsClass;
 
 	UMainMenuWidget* MainMenuWidget;
-	UHelpWidget* HelpWidget;
+	UInfoWidget* HelpWidget;
+	UInfoWidget* CreditsWidget;
 };

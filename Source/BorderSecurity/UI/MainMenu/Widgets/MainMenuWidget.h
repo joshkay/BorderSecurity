@@ -26,6 +26,9 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = MainMenu)
 	UButton* GetQuitButton();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = MainMenu)
+	UButton* GetCreditsButton();
+
 	UFUNCTION()
 	void OnPlayClicked();
 	
@@ -34,6 +37,9 @@ protected:
 
 	UFUNCTION()
 	void OnQuitClicked();
+
+	UFUNCTION()
+	void OnCreditsClicked();
 
 protected:
 	UPROPERTY(EditAnywhere, Category = MainMenu)

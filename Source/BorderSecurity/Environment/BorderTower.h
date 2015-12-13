@@ -15,6 +15,7 @@ class BORDERSECURITY_API ABorderTower : public ABorderItem
 	
 public:
 	ABorderTower(const FObjectInitializer& ObjectInitializer);
+	virtual void Destroyed() override;
 
 	FVector GetPlayerLocation();
 	
