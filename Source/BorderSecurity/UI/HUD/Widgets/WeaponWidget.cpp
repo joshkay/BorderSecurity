@@ -56,7 +56,7 @@ void UWeaponWidget::LoadUpgrades()
 		UpgradeWidget->SetWeapon(UpgradeableWeapon);
 		UpgradeWidget->SetUpgrade(Upgrade);
 
-		UPanelSlot* Slot = Cast<UPanelSlot>(GetUpgradeBox()->AddChild(UpgradeWidget));
+		UPanelSlot* PanelSlot = Cast<UPanelSlot>(GetUpgradeBox()->AddChild(UpgradeWidget));
 		//Slot->SetHorizontalAlignment(HAlign_Fill);
 		//Slot->SetVerticalAlignment(VAlign_Bottom);
 	}

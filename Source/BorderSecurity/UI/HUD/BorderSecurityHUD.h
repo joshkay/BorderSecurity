@@ -23,11 +23,11 @@ public:
 	void PostInitializeComponents() override;
 	void Destroyed() override;
 
-	void AddHealthBar(AActor* Owner);
-	void RemoveHealthBar(AActor* Owner);
+	void AddHealthBar(AActor* OwningActor);
+	void RemoveHealthBar(AActor* OwningActor);
 
-	void AddMoneyNotification(AActor* Owner, int32 Amount);
-	void RemoveMoneyNotification(AActor* Owner);
+	void AddMoneyNotification(AActor* OwningActor, int32 Amount);
+	void RemoveMoneyNotification(AActor* OwningActor);
 
 	void AddWeapon(AWeapon* Weapon);
 

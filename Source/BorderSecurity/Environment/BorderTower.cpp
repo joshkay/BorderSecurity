@@ -7,7 +7,7 @@ ABorderTower::ABorderTower(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer.SetDefaultSubobjectClass<UCapsuleComponent>(TEXT("ColliderComponent")))
 {
 	PlayerLocationComponent = CreateDefaultSubobject<USceneComponent>(TEXT("PlayerLocationComponent"));
-	PlayerLocationComponent->AttachTo(RootComponent);
+	PlayerLocationComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 void ABorderTower::Destroyed()

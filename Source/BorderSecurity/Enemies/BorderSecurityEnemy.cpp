@@ -37,10 +37,10 @@ void ABorderSecurityEnemy::Killed(AController* EventInstigator, AActor* DamageCa
 
 	if (EventInstigator == GetWorld()->GetFirstPlayerController() && EventInstigator->PlayerState)
 	{
-		ABorderSecurityPlayerState* PlayerState = Cast<ABorderSecurityPlayerState>(EventInstigator->PlayerState);
-		if (PlayerState)
+		ABorderSecurityPlayerState* EnemyPlayerState = Cast<ABorderSecurityPlayerState>(EventInstigator->PlayerState);
+		if (EnemyPlayerState)
 		{
-			PlayerState->Money += MoneyValue;
+			EnemyPlayerState->Money += MoneyValue;
 		}
 
 		if (BSHUD)

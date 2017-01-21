@@ -18,5 +18,5 @@ void UWeaponHolderWidget::AddWeapon(AWeapon* Weapon)
 	UWeaponWidget* WeaponWidget = CreateWidget<UWeaponWidget>(GetOwningPlayer(), WeaponClass);
 	WeaponWidget->SetWeapon(Weapon);
 
-	UPanelSlot* Slot = Cast<UPanelSlot>(GetWeaponBox()->AddChild(WeaponWidget));
+	UPanelSlot* PanelSlot = Cast<UPanelSlot>(GetWeaponBox()->AddChild(WeaponWidget));
 }

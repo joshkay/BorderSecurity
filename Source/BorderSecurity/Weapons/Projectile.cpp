@@ -26,7 +26,7 @@ void AProjectile::BeginPlay()
 	GetWorldTimerManager().SetTimer(DestroyTimer, this, &AProjectile::TimeIsUp, TimeToDestroy, false);
 }
 
-void AProjectile::OnOverlap(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+void AProjectile::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	if (!IgnoredActors.Contains(OtherActor))
 	{

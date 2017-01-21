@@ -9,15 +9,15 @@
 AGuardCharacter::AGuardCharacter()
 	: Super()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("Cameraboom"));
 	CameraBoom->SetRelativeRotation(FRotator(-35.f, 0.f, 0.f));
-	CameraBoom->AttachTo(RootComponent);
+	CameraBoom->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	Camera->AttachTo(CameraBoom);
+	Camera->AttachToComponent(CameraBoom, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 // Called when the game starts or when spawned
@@ -44,18 +44,18 @@ void AGuardCharacter::Destroyed()
 }
 
 // Called to bind functionality to input
-void AGuardCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+void AGuardCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
-	Super::SetupPlayerInputComponent(InputComponent);
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	//InputComponent->BindAxis(TEXT("TurnRight"), this, &ABorderSecurityCharacter::TurnRight);
-	InputComponent->BindAction(TEXT("SelectWeapon1"), IE_Released, this, &AGuardCharacter::SelectWeapon1);
-	InputComponent->BindAction(TEXT("SelectWeapon2"), IE_Released, this, &AGuardCharacter::SelectWeapon2);
-	InputComponent->BindAction(TEXT("SelectWeapon3"), IE_Released, this, &AGuardCharacter::SelectWeapon3);
-	InputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &AGuardCharacter::StartFire);
-	InputComponent->BindAction(TEXT("Fire"), IE_Released, this, &AGuardCharacter::StopFire);
-	InputComponent->BindAction(TEXT("MoveLeft"), IE_Released, this, &AGuardCharacter::MoveLeft);
-	InputComponent->BindAction(TEXT("MoveRight"), IE_Released, this, &AGuardCharacter::MoveRight);
+	PlayerInputComponent->BindAction(TEXT("SelectWeapon1"), IE_Released, this, &AGuardCharacter::SelectWeapon1);
+	PlayerInputComponent->BindAction(TEXT("SelectWeapon2"), IE_Released, this, &AGuardCharacter::SelectWeapon2);
+	PlayerInputComponent->BindAction(TEXT("SelectWeapon3"), IE_Released, this, &AGuardCharacter::SelectWeapon3);
+	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &AGuardCharacter::StartFire);
+	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Released, this, &AGuardCharacter::StopFire);
+	PlayerInputComponent->BindAction(TEXT("MoveLeft"), IE_Released, this, &AGuardCharacter::MoveLeft);
+	PlayerInputComponent->BindAction(TEXT("MoveRight"), IE_Released, this, &AGuardCharacter::MoveRight);
 }
 
 void AGuardCharacter::UpdateRotation()

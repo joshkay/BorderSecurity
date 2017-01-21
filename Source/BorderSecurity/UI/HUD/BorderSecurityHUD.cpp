@@ -7,12 +7,12 @@ void ABorderSecurityHUD::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	APlayerController* Owner = GetOwningPlayerController();
-	if (Owner)
+	APlayerController* OwningController = GetOwningPlayerController();
+	if (OwningController)
 	{
 		if (MoneyClass)
 		{
-			MoneyWidget = CreateWidget<UMoneyWidget>(Owner, MoneyClass);
+			MoneyWidget = CreateWidget<UMoneyWidget>(OwningController, MoneyClass);
 
 			if (MoneyWidget)
 			{
@@ -22,7 +22,7 @@ void ABorderSecurityHUD::PostInitializeComponents()
 
 		if (BorderHealthClass)
 		{
-			BorderHealthWidget = CreateWidget<UBorderHealthWidget>(Owner, BorderHealthClass);
+			BorderHealthWidget = CreateWidget<UBorderHealthWidget>(OwningController, BorderHealthClass);
 
 			if (BorderHealthWidget)
 			{
@@ -32,7 +32,7 @@ void ABorderSecurityHUD::PostInitializeComponents()
 
 		if (WeaponHolderClass)
 		{
-			WeaponHolderWidget = CreateWidget<UWeaponHolderWidget>(Owner, WeaponHolderClass);
+			WeaponHolderWidget = CreateWidget<UWeaponHolderWidget>(OwningController, WeaponHolderClass);
 
 			if (WeaponHolderWidget)
 			{
@@ -63,12 +63,12 @@ void ABorderSecurityHUD::Destroyed()
 	}
 }
 
-void ABorderSecurityHUD::AddHealthBar(AActor* Owner)
+void ABorderSecurityHUD::AddHealthBar(AActor* OwningActor)
 {
 	APlayerController* PlayerController = GetOwningPlayerController();
 	if (PlayerController)
 	{
-		UHealthBarWidget* HealthBar = HealthBarWidgets.FindOrAdd(Owner);
+		UHealthBarWidget* HealthBar = HealthBarWidgets.FindOrAdd(OwningActor);
 		if (!HealthBar)
 		{
 			if (HealthBarClass)
@@ -78,23 +78,23 @@ void ABorderSecurityHUD::AddHealthBar(AActor* Owner)
 
 			if (HealthBar)
 			{
-				HealthBar->SetOwner(Owner);
+				HealthBar->SetOwner(OwningActor);
 
 				HealthBar->AddToViewport();
-				HealthBarWidgets[Owner] = HealthBar;
+				HealthBarWidgets[OwningActor] = HealthBar;
 			}
 		}
 	}
 }
 
-void ABorderSecurityHUD::RemoveHealthBar(AActor* Owner)
+void ABorderSecurityHUD::RemoveHealthBar(AActor* OwningActor)
 {
-	if (!HealthBarWidgets.Contains(Owner))
+	if (!HealthBarWidgets.Contains(OwningActor))
 	{
 		return;
 	}
 
-	UHealthBarWidget* HealthBar = *HealthBarWidgets.Find(Owner);
+	UHealthBarWidget* HealthBar = *HealthBarWidgets.Find(OwningActor);
 	APlayerController* PlayerController = GetOwningPlayerController();
 
 	if (HealthBar && PlayerController)
@@ -102,16 +102,16 @@ void ABorderSecurityHUD::RemoveHealthBar(AActor* Owner)
 		HealthBar->RemoveFromViewport();
 		HealthBar = NULL;
 
-		HealthBarWidgets.Remove(Owner);
+		HealthBarWidgets.Remove(OwningActor);
 	}
 }
 
-void ABorderSecurityHUD::AddMoneyNotification(AActor* Owner, int32 Amount)
+void ABorderSecurityHUD::AddMoneyNotification(AActor* OwningActor, int32 Amount)
 {
 	APlayerController* PlayerController = GetOwningPlayerController();
 	if (PlayerController)
 	{
-		UMoneyNotificationWidget* MoneyNotification = MoneyNotificationWidgets.FindOrAdd(Owner);
+		UMoneyNotificationWidget* MoneyNotification = MoneyNotificationWidgets.FindOrAdd(OwningActor);
 		if (!MoneyNotification)
 		{
 			if (MoneyNotificationClass)
@@ -121,25 +121,25 @@ void ABorderSecurityHUD::AddMoneyNotification(AActor* Owner, int32 Amount)
 
 			if (MoneyNotification)
 			{
-				MoneyNotification->SetOwner(Owner);
+				MoneyNotification->SetOwner(OwningActor);
 				MoneyNotification->SetMoney(Amount);
-				MoneyNotification->OnNotificationComplete(FSimpleDelegate::CreateUObject(this, &ABorderSecurityHUD::RemoveMoneyNotification, Owner));
+				MoneyNotification->OnNotificationComplete(FSimpleDelegate::CreateUObject(this, &ABorderSecurityHUD::RemoveMoneyNotification, OwningActor));
 
 				MoneyNotification->AddToViewport();
-				MoneyNotificationWidgets[Owner] = MoneyNotification;
+				MoneyNotificationWidgets[OwningActor] = MoneyNotification;
 			}
 		}
 	}
 }
 
-void ABorderSecurityHUD::RemoveMoneyNotification(AActor* Owner)
+void ABorderSecurityHUD::RemoveMoneyNotification(AActor* OwningActor)
 {
-	if (!MoneyNotificationWidgets.Contains(Owner))
+	if (!MoneyNotificationWidgets.Contains(OwningActor))
 	{
 		return;
 	}
 
-	UMoneyNotificationWidget* MoneyNotification = *MoneyNotificationWidgets.Find(Owner);
+	UMoneyNotificationWidget* MoneyNotification = *MoneyNotificationWidgets.Find(OwningActor);
 	APlayerController* PlayerController = GetOwningPlayerController();
 
 	if (MoneyNotification && PlayerController)
@@ -147,7 +147,7 @@ void ABorderSecurityHUD::RemoveMoneyNotification(AActor* Owner)
 		MoneyNotification->RemoveFromViewport();
 		MoneyNotification = NULL;
 
-		MoneyNotificationWidgets.Remove(Owner);
+		MoneyNotificationWidgets.Remove(OwningActor);
 	}
 }
 

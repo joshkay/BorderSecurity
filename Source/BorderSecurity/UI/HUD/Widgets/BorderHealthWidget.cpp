@@ -27,8 +27,8 @@ void UBorderHealthWidget::NativeConstruct()
 		UBorderItemWidget* BorderItemWidget = NewObject<UBorderItemWidget>(this, BorderItemClass);
 		BorderItemWidget->SetOwner(BorderItem);
 
-		UHorizontalBoxSlot* Slot = Cast<UHorizontalBoxSlot>(GetHorizontalBox()->AddChild(BorderItemWidget));
-		Slot->SetHorizontalAlignment(HAlign_Fill);
-		Slot->SetVerticalAlignment(VAlign_Bottom);
+		UHorizontalBoxSlot* HorizontalSlot = Cast<UHorizontalBoxSlot>(GetHorizontalBox()->AddChild(BorderItemWidget));
+		HorizontalSlot->SetHorizontalAlignment(HAlign_Fill);
+		HorizontalSlot->SetVerticalAlignment(VAlign_Bottom);
 	}
 }

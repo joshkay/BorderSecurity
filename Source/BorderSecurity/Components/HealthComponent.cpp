@@ -5,7 +5,7 @@
 
 UHealthComponent::UHealthComponent()
 {
-	bWantsBeginPlay = true;
+	//bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
 }
 

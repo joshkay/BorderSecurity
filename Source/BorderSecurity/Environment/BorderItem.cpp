@@ -10,8 +10,7 @@ ABorderItem::ABorderItem(const FObjectInitializer& ObjectInitializer)
 	RootComponent = MeshComponent;
 	
 	ColliderComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ColliderComponent"));
-	ColliderComponent->AttachTo(RootComponent);
-
+	ColliderComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 }
 

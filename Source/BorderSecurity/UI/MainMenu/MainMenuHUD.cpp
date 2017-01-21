@@ -23,12 +23,12 @@ void AMainMenuHUD::ShowMainMenu()
 	HideHelp();
 	HideCredits();
 
-	APlayerController* Owner = GetOwningPlayerController();
-	if (Owner)
+	APlayerController* OwningController = GetOwningPlayerController();
+	if (OwningController)
 	{
 		if (MainMenuClass)
 		{
-			MainMenuWidget = CreateWidget<UMainMenuWidget>(Owner, MainMenuClass);
+			MainMenuWidget = CreateWidget<UMainMenuWidget>(OwningController, MainMenuClass);
 
 			if (MainMenuWidget)
 			{
@@ -51,12 +51,12 @@ void AMainMenuHUD::ShowHelp()
 {
 	HideMainMenu();
 
-	APlayerController* Owner = GetOwningPlayerController();
-	if (Owner)
+	APlayerController* OwningController = GetOwningPlayerController();
+	if (OwningController)
 	{
 		if (HelpClass)
 		{
-			HelpWidget = CreateWidget<UInfoWidget>(Owner, HelpClass);
+			HelpWidget = CreateWidget<UInfoWidget>(OwningController, HelpClass);
 
 			if (HelpWidget)
 			{
@@ -79,12 +79,12 @@ void AMainMenuHUD::ShowCredits()
 {
 	HideMainMenu();
 
-	APlayerController* Owner = GetOwningPlayerController();
-	if (Owner)
+	APlayerController* OwningController = GetOwningPlayerController();
+	if (OwningController)
 	{
 		if (CreditsClass)
 		{
-			CreditsWidget = CreateWidget<UInfoWidget>(Owner, CreditsClass);
+			CreditsWidget = CreateWidget<UInfoWidget>(OwningController, CreditsClass);
 
 			if (CreditsWidget)
 			{

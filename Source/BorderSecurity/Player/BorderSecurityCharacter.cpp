@@ -98,7 +98,7 @@ void ABorderSecurityCharacter::InitializeWeapon(TSubclassOf<AWeapon> WeaponClass
 	SpawnParams.Owner = this;
 
 	AWeapon* Weapon = GetWorld()->SpawnActor<AWeapon>(WeaponClass, FVector::ZeroVector, GetControlRotation(), SpawnParams);
-	Weapon->AttachRootComponentToActor(this);
+	Weapon->AttachToActor(this, FAttachmentTransformRules::KeepRelativeTransform);
 
 	Weapons.Add(Weapon);
 
